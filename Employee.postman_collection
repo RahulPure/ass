@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "60c0793c-864c-4e57-80a8-2e99c322a7e1",
+		"name": "Assigment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7109511"
+	},
+	"item": [
+		{
+			"name": "Create Employee",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"rahul\",\r\n    \"lastName\":\"pure\",\r\n    \"phoneNumber\":\"7620192181\",\r\n    \"salary\":200.0,\r\n    \"emailId\":\"rahulp2688@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/v1/employee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"rahul\",\r\n    \"lastName\":\"pure\",\r\n    \"phoneNumber\":\"7620192181\",\r\n    \"salary\":20000.0,\r\n    \"emailId\":\"rahulp2688@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/v1/employee/emp-853d9b22-c9bc-57ec-9a7b-93707dda2473",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"emp-853d9b22-c9bc-57ec-9a7b-93707dda2473"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Employee",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/api/v1/employee/search?sort=firstName&pageNo=1&pageSize=20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"search"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "firstName"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Address for Employee",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"state\": \"MH\",\r\n    \"street\": \"Pl 35\",\r\n    \"city\": \"Nagpur\",\r\n    \"zipCode\": \"441001\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/v1/employee/emp-8ffd1ff6-c073-5699-97d5-75284daa6094/address",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"emp-8ffd1ff6-c073-5699-97d5-75284daa6094",
+						"address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee Address By address Id",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"state\": \"MH\",\r\n    \"street\": \"Pl 45\",\r\n    \"city\": \"Nagpur\",\r\n    \"zipCode\": \"441001\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/v1/employee/emp-8ffd1ff6-c073-5699-97d5-75284daa6094/address/add-8439ebb0-3bd7-54e7-8a87-d17de3291b70",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"emp-8ffd1ff6-c073-5699-97d5-75284daa6094",
+						"address",
+						"add-8439ebb0-3bd7-54e7-8a87-d17de3291b70"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Address",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/api/v1/employee/emp-8ffd1ff6-c073-5699-97d5-75284daa6094",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"emp-8ffd1ff6-c073-5699-97d5-75284daa6094"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Employee by Id",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/api/v1/employee/emp-8ffd1ff6-c073-5699-97d5-75284daa6094",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"emp-8ffd1ff6-c073-5699-97d5-75284daa6094"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Address",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/api/v1/address/add-c752867f-0e08-522d-854a-afc60cd04cd1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"address",
+						"add-c752867f-0e08-522d-854a-afc60cd04cd1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
