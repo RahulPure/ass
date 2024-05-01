@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApplicationException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assignment</a> &gt; <a href="index.source.html" class="el_package">org.sample.assignment.exception</a> &gt; <span class="el_source">ApplicationException.java</span></div><h1>ApplicationException.java</h1><pre class="source lang-java linenums">package org.sample.assignment.exception;
+
+import lombok.Getter;
+import org.sample.assignment.errorcodes.ApplicationErrorCode;
+import org.springframework.http.HttpStatus;
+
+import java.io.Serial;
+import java.util.List;
+
+/**
+ * @author RahulPure
+ */
+@Getter
+public class ApplicationException extends  RuntimeException
+{
+    @Serial
+    private static final long serialVersionUID = 239846720984447L;
+<span class="nc" id="L18">    private final ApplicationErrorCode code;</span>
+<span class="nc" id="L19">    private final HttpStatus status;</span>
+<span class="nc" id="L20">    private final List&lt;FieldValidation&gt; messages;</span>
+
+    public ApplicationException(String message, ApplicationErrorCode code) {
+<span class="nc" id="L23">        super(message);</span>
+<span class="nc" id="L24">        this.code = code;</span>
+<span class="nc" id="L25">        status = null;</span>
+<span class="nc" id="L26">        messages = null;</span>
+<span class="nc" id="L27">    }</span>
+
+    public ApplicationException(String message, ApplicationErrorCode code, HttpStatus status) {
+<span class="nc" id="L30">        super(message);</span>
+<span class="nc" id="L31">        this.code = code;</span>
+<span class="nc" id="L32">        this.status = status;</span>
+<span class="nc" id="L33">        messages = null;</span>
+<span class="nc" id="L34">    }</span>
+
+<span class="nc" id="L36">    public ApplicationException(List&lt;FieldValidation&gt; messages, ApplicationErrorCode code) {</span>
+<span class="nc" id="L37">        this.code = code;</span>
+<span class="nc" id="L38">        this.messages = messages;</span>
+<span class="nc" id="L39">        status = null;</span>
+<span class="nc" id="L40">    }</span>
+
+    public ApplicationException(
+<span class="nc" id="L43">            List&lt;FieldValidation&gt; messages, ApplicationErrorCode code, HttpStatus status) {</span>
+<span class="nc" id="L44">        this.code = code;</span>
+<span class="nc" id="L45">        this.messages = messages;</span>
+<span class="nc" id="L46">        this.status = status;</span>
+<span class="nc" id="L47">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

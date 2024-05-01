@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assignment</a> &gt; <a href="index.source.html" class="el_package">org.sample.assignment.exception.handler</a> &gt; <span class="el_source">GlobalExceptionHandler.java</span></div><h1>GlobalExceptionHandler.java</h1><pre class="source lang-java linenums">package org.sample.assignment.exception.handler;
+
+import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.IteratorUtils;
+import org.sample.assignment.constants.ValidationMessages;
+import org.sample.assignment.exception.*;
+import org.sample.assignment.model.ErrorResponseBody;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.MimeType;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
+
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static org.sample.assignment.errorcodes.ApplicationErrorCode.*;
+
+<span class="nc" id="L31">@Slf4j</span>
+@RestControllerAdvice
+<span class="nc" id="L33">public class GlobalExceptionHandler {</span>
+    private static final String LOG_MESSAGE =
+            &quot; Exception: {} | HttpStatus: {} | ApplicationErrorCode: {} | Message: {} | Path:{}&quot;;
+
+    @ExceptionHandler(value = MissingRequestHeaderException.class)
+    public ResponseEntity&lt;Object&gt; missingRequestHeaderExceptionHandler(
+            MissingRequestHeaderException ex, WebRequest request) {
+<span class="nc" id="L40">        log.debug(</span>
+                LOG_MESSAGE,
+<span class="nc" id="L42">                ex.getClass(),</span>
+                HttpStatus.BAD_REQUEST,
+<span class="nc" id="L44">                REQUEST_HEADER_NOT_FOUND.getCode(),</span>
+<span class="nc" id="L45">                ex.getMessage(),</span>
+<span class="nc" id="L46">                request.getContextPath());</span>
+<span class="nc" id="L47">        return new ResponseEntity&lt;&gt;(</span>
+                new ErrorResponseBody&lt;&gt;(
+<span class="nc" id="L49">                        REQUEST_HEADER_NOT_FOUND.getCode(),</span>
+<span class="nc" id="L50">                        MessageFormat.format(ValidationMessages.HEADER_MISSING, ex.getHeaderName())),</span>
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = NoHandlerFoundException.class)
+    public ResponseEntity&lt;Object&gt; noHandlerFoundExceptionHandler(
+            NoHandlerFoundException ex, WebRequest request) {
+<span class="nc" id="L57">        log.debug(</span>
+                LOG_MESSAGE,
+<span class="nc" id="L59">                ex.getClass(),</span>
+                HttpStatus.METHOD_NOT_ALLOWED,
+<span class="nc" id="L61">                METHOD_NOT_ALLOWED.getCode(),</span>
+<span class="nc" id="L62">                ex.getMessage(),</span>
+<span class="nc" id="L63">                request.getContextPath());</span>
+<span class="nc" id="L64">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L65">                new ErrorResponseBody&lt;&gt;(METHOD_NOT_ALLOWED.getCode(), ex.getMessage()),</span>
+                HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    /*Request body  missing*/
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity&lt;Object&gt; httpMessageNotReadableExceptionHandler(
+            HttpMessageNotReadableException ex, WebRequest request) {
+<span class="nc" id="L73">        log.debug(</span>
+                LOG_MESSAGE,
+<span class="nc" id="L75">                ex.getClass(),</span>
+                HttpStatus.BAD_REQUEST,
+<span class="nc" id="L77">                REQUEST_BODY_INVALID.getCode(),</span>
+<span class="nc" id="L78">                ex.getMessage(),</span>
+<span class="nc" id="L79">                request.getContextPath());</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (Objects.isNull(ex.getCause())) {</span>
+<span class="nc" id="L81">            return new ResponseEntity&lt;&gt;(</span>
+                    new ErrorResponseBody&lt;&gt;(
+<span class="nc" id="L83">                            REQUEST_BODY_NOT_FOUND.getCode(), ValidationMessages.REQUEST_BODY_NOT_PRESENT),</span>
+                    HttpStatus.BAD_REQUEST);
+        }
+<span class="nc" id="L86">        return new ResponseEntity&lt;&gt;(</span>
+                new ErrorResponseBody&lt;&gt;(
+<span class="nc" id="L88">                        REQUEST_BODY_INVALID.getCode(), ValidationMessages.INVALID_REQUEST_BODY),</span>
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    public ResponseEntity&lt;Object&gt; unauthorizedHandler(
+            AuthenticationException ex, WebRequest request) {
+<span class="nc" id="L95">        log.debug(&quot;Unauthorized resource requested :: {}&quot;, ex.getMessage());</span>
+<span class="nc" id="L96">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L97">                new ErrorResponseBody&lt;&gt;(ex.getCode().getCode(), ex.getMessage()), HttpStatus.UNAUTHORIZED);</span>
+    }
+
+    @ExceptionHandler(value = AuthorizationException.class)
+    public ResponseEntity&lt;Object&gt; forbiddenHandler(AuthorizationException ex, WebRequest request) {
+<span class="nc" id="L102">        log.debug(&quot;Forbidden resource requested :: {}&quot;, ex.getMessage());</span>
+<span class="nc" id="L103">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L104">                new ErrorResponseBody&lt;&gt;(ex.getCode().getCode(), ex.getMessage()), HttpStatus.FORBIDDEN);</span>
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity&lt;Object&gt; httpRequestMethodNotSupportedExceptionHandler(
+            HttpRequestMethodNotSupportedException ex, WebRequest request) {
+<span class="nc" id="L110">        log.debug(&quot;Method Not Supported Exception :: {}&quot;, ex.getMessage());</span>
+<span class="nc" id="L111">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L112">                new ErrorResponseBody&lt;&gt;(HTTP_METHOD_INVALID.getCode(), ex.getMessage() + &quot;.&quot;),</span>
+                HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity&lt;Object&gt; constraintViolationExceptionHandler(
+            ConstraintViolationException ex, WebRequest request) {
+<span class="nc" id="L119">        List&lt;FieldValidation&gt; violations =</span>
+<span class="nc" id="L120">                ex.getConstraintViolations().stream()</span>
+<span class="nc" id="L121">                        .map(e -&gt; new FieldValidation(e.getPropertyPath().toString(), e.getMessage()))</span>
+<span class="nc" id="L122">                        .toList();</span>
+<span class="nc" id="L123">        log.debug(</span>
+                &quot;Constraint Violation Exception :: HttpStatus: {} | ApplicationErrorCode: {} | Message: {} | Path:{} &quot;,
+                HttpStatus.BAD_REQUEST,
+<span class="nc" id="L126">                CONSTRAINT_VIOLATION.getCode(),</span>
+                violations,
+<span class="nc" id="L128">                request.getContextPath());</span>
+<span class="nc" id="L129">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L130">                new ErrorResponseBody&lt;&gt;(CONSTRAINT_VIOLATION.getCode(), null, violations),</span>
+                HttpStatus.BAD_REQUEST);
+    }
+    /*field validation exceptions*/
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;Object&gt; methodArgumentNotValidExceptionHandler(
+            MethodArgumentNotValidException ex, WebRequest request) {
+<span class="nc" id="L137">        List&lt;FieldValidation&gt; violations =</span>
+<span class="nc" id="L138">                ex.getBindingResult().getAllErrors().stream()</span>
+<span class="nc" id="L139">                        .map(e -&gt; new FieldValidation(((FieldError) e).getField(), e.getDefaultMessage()))</span>
+<span class="nc" id="L140">                        .toList();</span>
+<span class="nc" id="L141">        log.debug(</span>
+                LOG_MESSAGE,
+<span class="nc" id="L143">                ex.getClass(),</span>
+                HttpStatus.BAD_REQUEST,
+<span class="nc" id="L145">                FIELD_VALIDATION_ERROR.getCode(),</span>
+                violations,
+<span class="nc" id="L147">                request.getContextPath());</span>
+
+<span class="nc" id="L149">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L150">                new ErrorResponseBody&lt;&gt;(CONSTRAINT_VIOLATION.getCode(), null, violations),</span>
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = ResourceConflictException.class)
+    public ResponseEntity&lt;Object&gt; resourceConflictExceptionHandler(
+            ResourceConflictException ex, WebRequest request) {
+<span class="nc" id="L157">        log.debug(</span>
+                &quot;Resource Conflict Exception :: ApplicationErrorCode: {} | Message: {}&quot;,
+<span class="nc" id="L159">                ex.getCode(),</span>
+<span class="nc" id="L160">                ex.getMessage());</span>
+<span class="nc" id="L161">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L162">                new ErrorResponseBody&lt;&gt;(ex.getCode().getCode(), ex.getMessage()), HttpStatus.CONFLICT);</span>
+    }
+
+    @ExceptionHandler(value = ResourceNotFoundException.class)
+    public ResponseEntity&lt;Object&gt; resourceNotFoundExceptionHandler(
+            ResourceNotFoundException ex, WebRequest request) {
+<span class="nc" id="L168">        log.debug(</span>
+                &quot;Resource Not Found Exception :: ApplicationErrorCode: {} | Message: {}&quot;,
+<span class="nc" id="L170">                ex.getCode(),</span>
+<span class="nc" id="L171">                ex.getMessage());</span>
+<span class="nc" id="L172">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L173">                new ErrorResponseBody&lt;&gt;(ex.getCode().getCode(), ex.getMessage()), HttpStatus.NOT_FOUND);</span>
+    }
+
+    @ExceptionHandler(value = BadFilterRequestException.class)
+    public ResponseEntity&lt;Object&gt; badFilterRequestExceptionHandler(
+            BadFilterRequestException ex, WebRequest request) {
+<span class="nc" id="L179">        log.debug(</span>
+                &quot;Bad Filter Request Exception :: ApplicationErrorCode: {} | Message: {}&quot;,
+<span class="nc" id="L181">                ex.getCode(),</span>
+<span class="nc" id="L182">                ex.getMessage());</span>
+<span class="nc" id="L183">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L184">                new ErrorResponseBody&lt;&gt;(ex.getCode().getCode(), ex.getMessage()), HttpStatus.BAD_REQUEST);</span>
+    }
+
+
+
+    @ExceptionHandler(value = ApplicationException.class)
+    public ResponseEntity&lt;Object&gt; applicationExceptionHandler(
+            ApplicationException e, WebRequest request) {
+<span class="nc" id="L192">        log.debug(&quot;Application Exception :: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L193">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L194">                new ErrorResponseBody&lt;&gt;(e.getCode().getCode(), e.getMessage()), e.getStatus());</span>
+    }
+
+    @ExceptionHandler(value = RepresentationException.class)
+    public ResponseEntity&lt;Object&gt; representationExceptionExceptionHandler(
+            RepresentationException e, WebRequest request) {
+<span class="nc" id="L200">        log.debug(&quot;Representation Exception :: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L201">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L202">                new ErrorResponseBody&lt;&gt;(e.getCode().getCode(), e.getMessage()), e.getStatus());</span>
+    }
+
+    @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity&lt;Object&gt; unsupportedMediaTypeExceptionHandler(
+            HttpMediaTypeNotSupportedException ex, WebRequest request) {
+
+<span class="nc" id="L209">        log.debug(</span>
+                LOG_MESSAGE,
+<span class="nc" id="L211">                ex.getClass(),</span>
+                HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+<span class="nc" id="L213">                REQUEST_HEADER_INVALID.getCode(),</span>
+<span class="nc" id="L214">                ex.getMessage(),</span>
+<span class="nc" id="L215">                request.getContextPath());</span>
+
+        /*Validates request Content-Type header*/
+<span class="nc" id="L218">        if (IteratorUtils.toList(request.getHeaderNames()).stream()</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">                .noneMatch(h -&gt; h.equalsIgnoreCase(HttpHeaders.CONTENT_TYPE))) {</span>
+<span class="nc" id="L220">            return new ResponseEntity&lt;&gt;(</span>
+                    new ErrorResponseBody&lt;&gt;(
+<span class="nc" id="L222">                            REQUEST_HEADER_NOT_FOUND.getCode(),</span>
+<span class="nc" id="L223">                            MessageFormat.format(ValidationMessages.HEADER_MISSING, HttpHeaders.CONTENT_TYPE)),</span>
+                    HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        } else {
+<span class="nc" id="L226">            return new ResponseEntity&lt;&gt;(</span>
+                    new ErrorResponseBody&lt;&gt;(
+<span class="nc" id="L228">                            REQUEST_HEADER_INVALID.getCode(),</span>
+<span class="nc" id="L229">                            MessageFormat.format(</span>
+                                    ValidationMessages.ALLOWED_SINGLE_VALUE_VALIDATION,
+                                    HttpHeaders.CONTENT_TYPE,
+<span class="nc" id="L232">                                    request.getHeader(HttpHeaders.CONTENT_TYPE),</span>
+<span class="nc" id="L233">                                    ex.getSupportedMediaTypes().stream()</span>
+<span class="nc" id="L234">                                            .map(MimeType::toString)</span>
+<span class="nc" id="L235">                                            .collect(Collectors.joining(&quot;,&quot;)))),</span>
+                    HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        }
+    }
+
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public ResponseEntity&lt;Object&gt; illegalArgumentExceptionHandler(
+            IllegalArgumentException e, WebRequest request) {
+<span class="nc" id="L243">        log.debug(&quot;Illegal Argument Exception :: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L244">        return new ResponseEntity&lt;&gt;(</span>
+<span class="nc" id="L245">                new ErrorResponseBody&lt;&gt;(REQUEST_BODY_INVALID.getCode(), e.getMessage()),</span>
+                HttpStatus.BAD_REQUEST);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assignment</a> &gt; <a href="index.source.html" class="el_package">org.sample.assignment.service</a> &gt; <span class="el_source">EmployeeServiceImpl.java</span></div><h1>EmployeeServiceImpl.java</h1><pre class="source lang-java linenums">package org.sample.assignment.service;
+
+import org.sample.assignment.constants.EntityType;
+import org.sample.assignment.converter.EmployeeRepresentationConverter;
+import org.sample.assignment.dao.EmployeeDAO;
+import org.sample.assignment.entity.Employee;
+import org.sample.assignment.model.ResponseBody;
+import org.sample.assignment.representations.EmployeeRepresentation;
+import org.sample.assignment.utils.UUIDGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * @author RahulPure
+ */
+@Service
+<span class="nc" id="L20">public class EmployeeServiceImpl implements EmployeeService{</span>
+
+    @Autowired
+    private EmployeeDAO employeeDAO;
+
+    @Override
+    @Transactional
+    public ResponseBody&lt;EmployeeRepresentation&gt; save(Authentication authentication, EmployeeRepresentation employeeRepresentation)
+    {
+<span class="nc" id="L29">        Employee entity = EmployeeRepresentationConverter.INSTANCE.toEntity(employeeRepresentation);</span>
+<span class="nc" id="L30">        entity.setId(UUIDGenerator.generateUniversalId(EntityType.EMPLOYEE));</span>
+<span class="nc" id="L31">        return new ResponseBody&lt;&gt;(</span>
+<span class="nc" id="L32">                HttpStatus.OK,EmployeeRepresentationConverter.INSTANCE.toRepresentation(employeeDAO.save(entity)));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

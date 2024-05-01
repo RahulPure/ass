@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assignment</a> &gt; <a href="index.source.html" class="el_package">org.sample.assignment.constants</a> &gt; <span class="el_source">EntityType.java</span></div><h1>EntityType.java</h1><pre class="source lang-java linenums">package org.sample.assignment.constants;
+
+import java.util.Arrays;
+
+/**
+ * @author RahulPure
+ */
+<span class="fc" id="L8">public enum EntityType {</span>
+<span class="fc" id="L9">    EMPLOYEE(&quot;Employee&quot;, &quot;emp&quot;);</span>
+
+    public final String title;
+    public final String identifierPrefix;
+
+<span class="fc" id="L14">    EntityType(String title, String identifierPrefix) {</span>
+<span class="fc" id="L15">        this.title = title;</span>
+<span class="fc" id="L16">        this.identifierPrefix = identifierPrefix;</span>
+<span class="fc" id="L17">    }</span>
+
+    public static EntityType getEnumByTitle(String title) {
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        for (EntityType e : EntityType.values()) {</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">            if (e.title.equals(title)) return e;</span>
+        }
+<span class="nc" id="L23">        return null;</span>
+    }
+
+    public static EntityType getByFullIdentifier(String identifier) {
+<span class="nc" id="L27">        return Arrays.stream(values())</span>
+<span class="nc" id="L28">                .filter(v -&gt; identifier.startsWith(v.identifierPrefix))</span>
+<span class="nc" id="L29">                .findAny()</span>
+<span class="nc" id="L30">                .orElse(null);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L35">        return title;</span>
+    }
+
+    public String getIdentifierPrefix() {
+<span class="nc" id="L39">        return identifierPrefix;</span>
+    }
+
+    public String getTitle() {
+<span class="nc" id="L43">        return title;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

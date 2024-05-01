@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidationMessages.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assignment</a> &gt; <a href="index.source.html" class="el_package">org.sample.assignment.constants</a> &gt; <span class="el_source">ValidationMessages.java</span></div><h1>ValidationMessages.java</h1><pre class="source lang-java linenums">package org.sample.assignment.constants;
+
+<span class="nc" id="L3">public class ValidationMessages</span>
+{
+    public static final String REQUIRED_VALIDATION_ERR_MSG =
+            &quot;{0} is required. It must not be empty or null.&quot;;
+    public static final String ENTITY_NAME_REGEX_ALLOW_SPACE_AT_SIGN = &quot;^[a-zA-Z0-9-_@., ]+$|\\s*&quot;;
+    public static final String EMAIL_REGEX =
+            &quot;^[a-zA-Z0-9_+&amp;*-]+(?:\\.[a-zA-Z0-9_+&amp;*-]+)*@&quot; +
+                    &quot;(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$&quot;;
+    public static final String MOBILE_NUMBER_REGEX = &quot;^[0-9]{10}$&quot;;
+
+    public static final String EMPLOYEE_FIRST_NAME_VALIDATION_ERR_MSG =
+            &quot;Employee first name '${validatedValue}' is invalid. Only alphanumeric, hyphen, period, at sign, space and underscore characters are allowed.&quot;;
+
+    public static final String EMPLOYEE_LAST_NAME_VALIDATION_ERR_MSG =
+            &quot;Employee last name '${validatedValue}' is invalid. Only alphanumeric, hyphen, period, at sign, space and underscore characters are allowed.&quot;;
+
+    public static final String EMAIL_VALIDATION_ERR_MSG =
+            &quot;Employee email '${validatedValue}' is invalid.&quot;;
+    public static final String MOBILE_VALIDATION_ERR_MSG =
+            &quot;Employee phone '${validatedValue}' is invalid.&quot;;
+    public static final String HEADER_MISSING = &quot;Request header ''{0}'' is required. It must not be empty or null.&quot;;
+    public static final String REQUEST_BODY_NOT_PRESENT = &quot;Request body is required.&quot;;
+    public static final String UNEXPECTED_ERROR = &quot;Something went wrong. Please try again later. If the issue persists contact, our support team.&quot;;
+    public static final String INVALID_REQUEST_BODY = &quot;Request body is invalid.&quot;;
+    public static final String ALLOWED_SINGLE_VALUE_VALIDATION = &quot;{0} ''{1}'' is invalid. Valid value is {2}.&quot;;
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

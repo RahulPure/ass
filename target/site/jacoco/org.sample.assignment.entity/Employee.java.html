@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Employee.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assignment</a> &gt; <a href="index.source.html" class="el_package">org.sample.assignment.entity</a> &gt; <span class="el_source">Employee.java</span></div><h1>Employee.java</h1><pre class="source lang-java linenums">package org.sample.assignment.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * @author RahulPure
+ */
+@Entity
+@Getter
+<span class="nc" id="L12">@Setter</span>
+@Table(name = &quot;employees&quot;)
+@AttributeOverride(name = &quot;id&quot;, column = @Column(name = &quot;employee_id&quot;))
+<span class="nc" id="L15">public class Employee</span>
+{
+    @Id
+    @Column(name = &quot;employee_id&quot;)
+<span class="nc" id="L19">    private String id;</span>
+
+    @Column(name = &quot;first_name&quot;)
+<span class="nc" id="L22">    private String firstName;</span>
+
+    @Column(name = &quot;last_name&quot;)
+<span class="nc" id="L25">    private String lastName;</span>
+
+    @Column(name = &quot;email&quot;)
+<span class="nc" id="L28">    private String emailId;</span>
+
+    @Column(name = &quot;phone_number&quot;)
+<span class="nc" id="L31">    private String phoneNumber;</span>
+
+    @Column(name = &quot;salary&quot;)
+<span class="nc" id="L34">    private Double salary;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

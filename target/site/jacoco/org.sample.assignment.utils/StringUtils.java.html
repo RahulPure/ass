@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assignment</a> &gt; <a href="index.source.html" class="el_package">org.sample.assignment.utils</a> &gt; <span class="el_source">StringUtils.java</span></div><h1>StringUtils.java</h1><pre class="source lang-java linenums">package org.sample.assignment.utils;
+
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.Collection;
+import java.util.Objects;
+
+<span class="nc" id="L8">@Slf4j</span>
+public class StringUtils {
+    public static final String EMPTY_STRING = &quot;&quot;;
+    private StringUtils() {}
+    public static boolean isNotBlank(Object string) {
+<span class="nc bnc" id="L13" title="All 4 branches missed.">        return Objects.nonNull(string) &amp;&amp; !convertToString(string).equals(EMPTY_STRING);</span>
+    }
+
+    public static boolean isEmpty(final CharSequence input) {
+<span class="nc bnc" id="L17" title="All 4 branches missed.">        return input == null || input.toString().trim().length() == 0;</span>
+    }
+
+    public static boolean isNullOrEmpty(String string) {
+<span class="nc" id="L21">        return convertToString(string).equals(EMPTY_STRING);</span>
+    }
+
+    public static boolean isNull(String value) {
+<span class="nc bnc" id="L25" title="All 4 branches missed.">        return value == null || value.isBlank();</span>
+    }
+
+    public static boolean isWhitespace(final CharSequence input) {
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (input == null) {</span>
+<span class="nc" id="L30">            return false;</span>
+        }
+<span class="nc" id="L32">        final int sz = input.length();</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        for (int i = 0; i &lt; sz; i++) {</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            if (!Character.isWhitespace(input.charAt(i))) {</span>
+<span class="nc" id="L35">                return false;</span>
+            }
+        }
+<span class="nc" id="L38">        return true;</span>
+    }
+
+    public static String convertToString(Object object) {
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (Objects.isNull(object)) return EMPTY_STRING;</span>
+<span class="nc" id="L43">        return String.valueOf(object);</span>
+    }
+
+    public static boolean isBlank(Object string) {
+<span class="nc" id="L47">        return convertToString(string).equals(EMPTY_STRING);</span>
+    }
+
+    public static boolean isNotEmpty(Collection&lt;?&gt; collection) {
+<span class="nc bnc" id="L51" title="All 4 branches missed.">        return Objects.nonNull(collection) &amp;&amp; !collection.isEmpty();</span>
+    }
+
+    public static boolean isValidString(String string) {
+<span class="nc bnc" id="L55" title="All 6 branches missed.">        return string != null &amp;&amp; !&quot;null&quot;.equalsIgnoreCase(string.trim()) &amp;&amp; string.trim().length() &gt; 0;</span>
+    }
+
+    public static boolean isNotEmptyString(String string) {
+<span class="nc bnc" id="L59" title="All 6 branches missed.">        return string != null &amp;&amp; !&quot;null&quot;.equalsIgnoreCase(string.trim()) &amp;&amp; string.length() &gt; 0;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

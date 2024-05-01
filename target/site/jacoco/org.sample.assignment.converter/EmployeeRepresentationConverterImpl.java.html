@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeRepresentationConverterImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assignment</a> &gt; <a href="index.source.html" class="el_package">org.sample.assignment.converter</a> &gt; <span class="el_source">EmployeeRepresentationConverterImpl.java</span></div><h1>EmployeeRepresentationConverterImpl.java</h1><pre class="source lang-java linenums">package org.sample.assignment.converter;
+
+import javax.annotation.processing.Generated;
+import org.sample.assignment.entity.Employee;
+import org.sample.assignment.representations.EmployeeRepresentation;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2024-04-30T21:19:29+0530&quot;,
+    comments = &quot;version: 1.4.2.Final, compiler: javac, environment: Java 17.0.7 (Azul Systems, Inc.)&quot;
+)
+<span class="nc" id="L12">public class EmployeeRepresentationConverterImpl implements EmployeeRepresentationConverter {</span>
+
+    @Override
+    public Employee toEntity(EmployeeRepresentation employeeRepresentation) {
+<span class="nc bnc" id="L16" title="All 2 branches missed.">        if ( employeeRepresentation == null ) {</span>
+<span class="nc" id="L17">            return null;</span>
+        }
+
+<span class="nc" id="L20">        Employee employee = new Employee();</span>
+
+<span class="nc" id="L22">        employee.setFirstName( employeeRepresentation.getFirstName() );</span>
+<span class="nc" id="L23">        employee.setLastName( employeeRepresentation.getLastName() );</span>
+<span class="nc" id="L24">        employee.setEmailId( employeeRepresentation.getEmailId() );</span>
+<span class="nc" id="L25">        employee.setPhoneNumber( employeeRepresentation.getPhoneNumber() );</span>
+<span class="nc" id="L26">        employee.setSalary( employeeRepresentation.getSalary() );</span>
+
+<span class="nc" id="L28">        return employee;</span>
+    }
+
+    @Override
+    public EmployeeRepresentation toRepresentation(Employee employee) {
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if ( employee == null ) {</span>
+<span class="nc" id="L34">            return null;</span>
+        }
+
+<span class="nc" id="L37">        EmployeeRepresentation employeeRepresentation = new EmployeeRepresentation();</span>
+
+<span class="nc" id="L39">        employeeRepresentation.setEmployeeId( employee.getId() );</span>
+<span class="nc" id="L40">        employeeRepresentation.setFirstName( employee.getFirstName() );</span>
+<span class="nc" id="L41">        employeeRepresentation.setLastName( employee.getLastName() );</span>
+<span class="nc" id="L42">        employeeRepresentation.setEmailId( employee.getEmailId() );</span>
+<span class="nc" id="L43">        employeeRepresentation.setPhoneNumber( employee.getPhoneNumber() );</span>
+<span class="nc" id="L44">        employeeRepresentation.setSalary( employee.getSalary() );</span>
+
+<span class="nc" id="L46">        return employeeRepresentation;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
